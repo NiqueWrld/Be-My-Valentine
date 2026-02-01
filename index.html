@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fbcfe8">
     <title>Be My Valentine</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-pink-200 min-h-screen flex items-center justify-center p-4">
     <div class="bg-pink-400 w-[500px] rounded-2xl shadow-xl p-10 text-center">
-        <img src="./teddy-bear.svg" alt="Cute Pink Teddy Bear" class="mx-auto w-40 mb-4">
-        <h1 class="text-3xl font-bold text-white mb-8">Be My Valentine?</h1>
+        <img id="teddy" src="./teddy-bear.svg" alt="Cute Pink Teddy Bear" class="mx-auto w-40 mb-4">
+        <h1 id="title" class="text-3xl font-bold text-white mb-8">Be My Valentine?</h1>
         <div class="flex justify-center gap-4">
             <button id="yesBtn" class="bg-pink-500 hover:bg-pink-600 border-2 border-pink-700 text-white font-bold py-3 px-8 rounded-md transition-all">Yes</button>
             <button id="noBtn" class="bg-pink-500 hover:bg-pink-600 border-2 border-pink-700 text-white font-bold py-3 px-8 rounded-md transition-all">No</button>
@@ -24,14 +25,19 @@
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
         const yayMessage = document.getElementById('yayMessage');
+        const teddy = document.getElementById('teddy');
+        const title = document.getElementById('title');
         
         yesBtn.addEventListener('click', () => {
             yayMessage.classList.remove('hidden');
             yesBtn.classList.add('hidden');
             noBtn.classList.add('hidden');
+            teddy.classList.add('hidden');
+            title.classList.add('hidden');
         });
         
-        noBtn.addEventListener('mouseover', () => {
+        function runAway(e) {
+            e.preventDefault();
             const maxX = window.innerWidth - noBtn.offsetWidth - 20;
             const maxY = window.innerHeight - noBtn.offsetHeight - 20;
             
@@ -41,7 +47,11 @@
             noBtn.style.position = 'fixed';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
-        });
+        }
+        
+        noBtn.addEventListener('mouseover', runAway);
+        noBtn.addEventListener('touchstart', runAway);
+        noBtn.addEventListener('click', runAway);
     </script>
 </body>
 </html>
